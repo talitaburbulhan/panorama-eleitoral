@@ -23,12 +23,14 @@ let dados = undefined
 
 
 function extraiAno(data){ 
-return +data.substr(6,4) //o + converte a string em número 
+return +data.substr(6,4) // "substr" é um método, o 6 informa que eu quero a partir do 7º elemento da string e o 4 diz a quantidade de itens que deve compor a string.  
 } 
 
 function run(jsondata) { // criei a função run para que os meus dados em json não desaparecessem. Todo o restante do meu código roda dentro dela.  
 
-   for(row of jsondata){ //Para cada linha do meu objeto
+   console.log( jsondata )
+   
+   for(row of jsondata){ //
       let idade = 2022 - (extraiAno(row.DT_NASCIMENTO))  /// cria a variável idade. Como? Roda a função extraiAno e dá como parâmetro a coluna DT_ANO do meu Json
       let faixaIdade // Cria a variável faixaIdade , o valor dela muda de acordo com o IF
       if (idade > 18 && idade < 31) faixaIdade = "De 18 a 30 anos"
@@ -66,11 +68,9 @@ function run(jsondata) { // criei a função run para que os meus dados em json 
 
 function atualizarOpcoes() {
 
-   for(let ano of seletorFaixa){
-
-      if (seletorFaixa != "") 
+      if (seletorFaixa.value != "") 
       opcoes.ano = seletorFaixa.value
-   }
+   
    
   
    for (let genero of generos){
@@ -100,8 +100,6 @@ function atualizarOpcoes() {
       }
    }
     
-   
-
   filtrar() 
 
 }
@@ -110,27 +108,37 @@ function filtrar() {
 
    let contador = 0
    
-   for (let dado of dados){  // olha cada linha da planilha e ve se o genero que a pessoa selecionou bate com o do candidato 
-   
-      
+   for (let candidato of dados){   
+
       let condicaoFaixa, condicaoGenero, condicaoInstrucao, condicaoCivil, condicaoRaca
 
-      if (opcoes.ano == "") condicaoFaixa = true
-      else condicaoFaixa = opcoes.ano
+      if (opcoes.ano == undefined)
+         condicaoFaixa = true
+      else 
+         condicaoFaixa = opcoes.ano == candidato.faixaIdade
 
-      if (opcoes.genero == "FEMININO") condicaoFaixa = true
-      else condicaoFaixa == "MASCULINO"
+      if (opcoes.genero == undefined)
+         condicaoGenero = true
+      else
+         condicaoGenero = opcoes.genero == candidato.DS_GENERO
       
-      if (opcoes.grauInstrucao == "TODOS") condicaoFaixa = true
-      else condicaoFaixa = opcoes.grauInstrucao
+      if (opcoes.grauInstrucao == "TODOS")
+         condicaoInstrucao = true
+      else 
+         condicaoInstrucao = opcoes.grauInstrucao == candidato.DS_GRAU_INSTRUCAO
+      
+      if (opcoes.estadoCivil == "TODOS")
+         condicaoCivil = true
+      else 
+         condicaoCivil = opcoes.estadoCivil == candidato.DS_ESTADO_CIVIL
 
-      if (opcoes.estadoCivil == "TODOS") condicaoFaixa = true
-      else condicaoFaixa = opcoes.estadoCivil
-
-      if (opcoes.raca == "TODOS") condicaoFaixa = true
-      else condicaoFaixa = opcoes.raca
+      if (opcoes.raca == "TODOS")
+         condicaoRaca = true
+      else
+         condicaoRaca = opcoes.raca == candidato.DS_COR_RACA
 
       
+
       if (condicaoFaixa && condicaoGenero && condicaoInstrucao && condicaoCivil && condicaoRaca)   {  // está vendo se a informação do json está batendo com a informação que eu tinha armazaenado lá em cima (que é o genero selecionado)
       contador++         // se as infos baterem, soma 1
       }
@@ -146,9 +154,4 @@ function mostrar(contador) {
    
   document.querySelector('.contagem').textContent = contador
   document.querySelector('.porcentagem').textContent = ((contador * 100) / dados.length).toFixed(3)+"%"  
-                          // Se começa com letra maiúscula é pq normalmente é uma lcasse, um tipo de objeto 
-  
-  
 }
-
-
