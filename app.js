@@ -11,6 +11,20 @@ let grausDeInstrucao = document.querySelector('.instrucao')
 let estadosCivis = document.querySelector('.estadoCivil')
 let racas = document.querySelector('.raca')
 
+function limpar(){
+
+   seletorFaixa.value = 'TODOS'
+   grausDeInstrucao.value = 'TODOS'
+   estadosCivis.value = 'TODOS'
+   racas.value = 'TODOS'
+
+   for( let genero of generos) {
+   genero.checked = false
+   }
+}
+
+limpar()
+
 let opcoes = {     // objeto de estado 
    ano: undefined,
    genero: undefined,
@@ -145,7 +159,6 @@ function filtrar() {
    
    }
    
-
    mostrar(contador)
         
 }
@@ -155,3 +168,4 @@ function mostrar(contador) {
   document.querySelector('.contagem').textContent = contador
   document.querySelector('.porcentagem').textContent = ((contador * 100) / dados.length).toFixed(3)+"%"  
 }
+
