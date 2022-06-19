@@ -6,6 +6,11 @@ html, body{
     font-family: 'Inter', sans-serif;
 }
 
+.carregando {
+    opacity: .2;
+    pointer-events: none;
+}
+
 * {
     box-sizing: border-box; /* na largura dos elementos, considera o padding */
     max-width: 550px;

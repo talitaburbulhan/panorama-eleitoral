@@ -42,7 +42,7 @@ return +data.substr(6,4) // "substr" é um método, o 6 informa que eu quero a p
 
 function run(jsondata) { // criei a função run para que os meus dados em json não desaparecessem. Todo o restante do meu código roda dentro dela.  
 
-   console.log( jsondata )
+   document.body.classList.remove( 'carregando' )
    
    for(row of jsondata){ //
       let idade = 2022 - (extraiAno(row.DT_NASCIMENTO))  /// cria a variável idade. Como? Roda a função extraiAno e dá como parâmetro a coluna DT_ANO do meu Json
